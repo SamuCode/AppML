@@ -10,6 +10,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var collector:  HARSensorCollector
     private lateinit var classifier: HARClassifier
 
+    private lateinit var extractor:  UCIHARFeatureExtractor
+
     private lateinit var tvActivity:   TextView
     private lateinit var tvConfidence: TextView
     private lateinit var tvStatus:     TextView
@@ -26,16 +28,21 @@ class MainActivity : AppCompatActivity() {
         tvStatus     = findViewById(R.id.tv_status)
         tvSensorData = findViewById(R.id.tv_sensor_data)
 
-        classifier = HARClassifier(this)
-        tvStatus.text = "Calibration... (2.56 sec)"
+        extractor  = UCIHARFeatureExtractor(this)
+        classifier = `HARClassifier.kt`(this)
+
+        tvStatus.text = "⏳ Calibration... (2.56 sec)"
 
         collector = HARSensorCollector(this) { accX, accY, accZ, gyroX, gyroY, gyroZ ->
             scope.launch {
                 try {
-                    val (label, confidence) = classifier.classify(
-                        accX, accY, accZ, gyroX, gyroY, gyroZ
-                    )
+                    // Extraction des 561 features
+                    val features = extractor.extract(accX, accY, accZ, gyroX, gyroY, gyroZ)
+
+                    // Inférence TFLite
+                    val (label, confidence) = classifier.classify(features)
                     val pct = (confidence * 100).toInt()
+
                     val emoji = when (label) {
                         "WALKING"            -> "🚶"
                         "WALKING_UPSTAIRS"   -> "🏔️"
@@ -45,21 +52,23 @@ class MainActivity : AppCompatActivity() {
                         "LAYING"             -> "🛌"
                         else                 -> "❓"
                     }
+
                     withContext(Dispatchers.Main) {
                         tvActivity.text   = "$emoji $label"
                         tvConfidence.text = "Confiance : $pct%"
                         tvStatus.text     = "✅ Analyse en cours"
-                        tvSensorData.text = "Acc x=" + "%.2f".format(accX.last()) +
-                                "  y=" + "%.2f".format(accY.last()) +
-                                "  z=" + "%.2f".format(accZ.last()) + " (g)"
+                        tvSensorData.text = "Acc x=%.2f  y=%.2f  z=%.2f (g)".format(
+                            accX.last(), accY.last(), accZ.last()
+                        )
                     }
                 } catch (e: Exception) {
                     withContext(Dispatchers.Main) {
-                        tvStatus.text = "Erreur: " + e.message
+                        tvStatus.text = "⚠️ Erreur: ${e.message}"
                     }
                 }
             }
         }
+
         collector.start()
     }
 

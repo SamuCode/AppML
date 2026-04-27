@@ -51,7 +51,8 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
 
 
-    implementation("org.tensorflow:tensorflow-lite:2.14.0")
+
+    implementation("com.microsoft.onnxruntime:onnxruntime-android:1.16.3")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
 
 
