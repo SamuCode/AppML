@@ -38,7 +38,8 @@ class MainActivity : AppCompatActivity() {
                 try {
                     // Extraction des 561 features
                     val features = extractor.extract(accX, accY, accZ, gyroX, gyroY, gyroZ)
-
+                    android.util.Log.d("HAR", "Nb features: " + features.size)
+                    android.util.Log.d("HAR", "min=" + features.min() + " max=" + features.max() + " mean=" + features.average())
                     // Inférence TFLite
                     val (label, confidence) = classifier.classify(features)
                     val pct = (confidence * 100).toInt()
