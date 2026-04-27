@@ -29,7 +29,7 @@ class MainActivity : AppCompatActivity() {
         tvSensorData = findViewById(R.id.tv_sensor_data)
 
         extractor  = UCIHARFeatureExtractor(this)
-        classifier = `HARClassifier.kt`(this)
+        classifier = HARClassifier(this)
 
         tvStatus.text = "⏳ Calibration... (2.56 sec)"
 
