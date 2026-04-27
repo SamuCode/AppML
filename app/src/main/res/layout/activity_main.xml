@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="24dp"
+    android:background="#1A1A2E">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Reconnaissance d'Activité"
+        android:textSize="20sp"
+        android:textColor="#E0E0E0"
+        android:textStyle="bold"
+        android:layout_marginBottom="32dp"/>
+
+    <TextView
+        android:id="@+id/tv_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Démarrage..."
+        android:textSize="13sp"
+        android:textColor="#FFB74D"
+        android:layout_marginBottom="24dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ACTIVITÉ DÉTECTÉE"
+        android:textSize="11sp"
+        android:textColor="#9E9E9E"
+        android:letterSpacing="0.1"
+        android:layout_marginBottom="8dp"/>
+
+    <TextView
+        android:id="@+id/tv_activity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="En attente..."
+        android:textSize="30sp"
+        android:textColor="#4FC3F7"
+        android:textStyle="bold"
+        android:layout_marginBottom="12dp"/>
+
+    <TextView
+        android:id="@+id/tv_confidence"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Confiance : --"
+        android:textSize="18sp"
+        android:textColor="#81C784"
+        android:layout_marginBottom="40dp"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#333355"
+        android:layout_marginBottom="24dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="CAPTEURS"
+        android:textSize="11sp"
+        android:textColor="#9E9E9E"
+        android:layout_marginBottom="8dp"/>
+
+    <TextView
+        android:id="@+id/tv_sensor_data"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Acc x=0.00  y=0.00  z=0.00 (g)"
+        android:textSize="13sp"
+        android:textColor="#BDBDBD"
+        android:fontFamily="monospace"/>
+
+</LinearLayout>
