@@ -37,7 +37,17 @@ class MainActivity : AppCompatActivity() {
             scope.launch {
                 try {
                     // Extraction des 561 features
+
                     val features = extractor.extract(accX, accY, accZ, gyroX, gyroY, gyroZ)
+                    android.util.Log.d("HARM", "min=" + features.min() + " max=" + features.max() + " mean=" + features.average())
+                    try {
+                        val file = java.io.File(getExternalFilesDir(null), "features_sample.json")
+                        val json = org.json.JSONArray(features.map { it.toDouble() }.toTypedArray())
+                        file.writeText(json.toString())
+                        android.util.Log.d("HAR", "Features sauvegardées dans: " + file.absolutePath)
+                    } catch (e: Exception) {
+                        android.util.Log.d("HAR", "Erreur sauvegarde: " + e.message)
+                    }
                     android.util.Log.d("HAR", "Nb features: " + features.size)
                     android.util.Log.d("HAR", "min=" + features.min() + " max=" + features.max() + " mean=" + features.average())
                     // Inférence TFLite
